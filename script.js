@@ -8,7 +8,10 @@
 let inputvalue = document.querySelector(".search-box");
 let button = document.querySelector(".button");
 let temp = document.querySelector(".current .temp");
-let city = document.querySelector(".location .city");
+let area = document.querySelector(".location .city");
+let lattitude = document.querySelector(".location .lat")
+let longitude = document.querySelector(".location .long")
+
 let description = document.querySelector(".current .weather");
 let date = document.querySelector(".date")
 //button event listener
@@ -31,7 +34,9 @@ button.addEventListener("click", function () {
 
 const displayData = (weather) => {
   console.log(weather);
-  city.innerHTML = `${weather.name}`;
+  area.innerHTML = `${weather.name}, ${weather.sys.country}  `;
+  lattitude.innerHTML = `Lattitude: ${weather.coord.lat}`;
+  longitude.innerHTML = `Longitude: ${weather.coord.lon}`;
   temp.innerHTML = `${
     Math.round((weather.main.temp - 273.15) * 100) / 100
   } °C `;
@@ -94,3 +99,13 @@ function datebuilder(d) {
 // } catch (error) {
 // 	console.error(error);
 // }
+
+
+//try adding loader
+/// iframe
+// unsplashapi
+// pinterest 
+// pexels
+// 
+
+
