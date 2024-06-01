@@ -4,7 +4,7 @@
 // catch((err)=>console.log("Error: ",err))
 
 
-//defining variables
+//defining variables needed
 let inputvalue = document.querySelector(".search-box");
 let button = document.querySelector(".button");
 let temp = document.querySelector(".current .temp");
@@ -13,9 +13,20 @@ let lattitude = document.querySelector(".location .lat")
 let longitude = document.querySelector(".location .long")
 
 let description = document.querySelector(".current .weather");
-let date = document.querySelector(".date")
-//button event listener
-button.addEventListener("click", function () {
+let date = document.querySelector(".date");
+
+//adding event listener for button click and enter key press
+button.addEventListener("click", fetchdata );
+inputvalue.addEventListener("keypress",function(e){
+  if(e.key ==="Enter")
+    {
+      button.click();
+    }
+});
+
+//fetchdata function to fetch value from weather api
+function fetchdata()
+{
   fetch(
     `https://weather-api99.p.rapidapi.com/weather?city=${inputvalue.value}`,
     {
@@ -29,22 +40,22 @@ button.addEventListener("click", function () {
     .then((response) => response.json())
     .then(displayData)
     .catch((err) => console.log("Error: ", err));
-});
+}
 
-
+//display data function to edit the inner HTML for displaying values
 const displayData = (weather) => {
   console.log(weather);
   area.innerHTML = `${weather.name}, ${weather.sys.country}  `;
   lattitude.innerHTML = `Lattitude: ${weather.coord.lat}`;
   longitude.innerHTML = `Longitude: ${weather.coord.lon}`;
-  temp.innerHTML = `${
-    Math.round((weather.main.temp - 273.15) * 100) / 100
-  } °C `;
+  temp.innerHTML = `${ Math.round( (weather.main.temp - 273.15) * 100) / 100  } °C `;  
   description.innerHTML = `${weather.weather[0].description}`;
+
   let now = new Date();
   date.innerHTML = datebuilder(now);
 };
 
+//datebuilder function to build and display current date
 function datebuilder(d) {
   let months = [
     "January",
@@ -76,7 +87,7 @@ function datebuilder(d) {
   let month = months[d.getMonth()];
   let year = d.getFullYear();
 
-  return `${day} ${date} ${month} ${year}`;
+  return `${day} , ${date} ${month} ${year}`;
 }
 
 //Session notes
